@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "randore",
+  "version": "${version}",
+
+  "name": "Randore",
+  "description": "Random ore block that drops ALL (vanilla) kinds of ore!",
+  "authors": [
+    "Peakstep"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/randore/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.intelligentcreations.randore.RandoreMod"
+    }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.8.7",
+    "fabric": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.17.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
