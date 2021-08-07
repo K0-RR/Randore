@@ -32,22 +32,42 @@ class RandoreMod : ModInitializer {
             Identifier("randore", "random_ore"),
             BlockItem(RANDOM_ORE, FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS))
         )
+        Registry.register(Registry.BLOCK, Identifier("randore", "deepslate_random_ore"), DEEPSLATE_RANDOM_ORE)
+        Registry.register(
+            Registry.ITEM,
+            Identifier("randore", "deepslate_random_ore"),
+            BlockItem(DEEPSLATE_RANDOM_ORE, FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS))
+        )
         
         val oreRandomStone = RegistryKey.of(
             Registry.CONFIGURED_FEATURE_KEY,
             Identifier("randore", "ore_random_stone")
         )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomStone.value, RandoreMod.ORE_RANDOM_STONE)
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomStone.value, ORE_RANDOM_STONE)
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
             oreRandomStone
         )
+
+        val oreRandomDeepslate = RegistryKey.of(
+            Registry.CONFIGURED_FEATURE_KEY,
+            Identifier("randore", "ore_random_deepslate")
+        )
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, RandoreMod.ORE_RANDOM_DEEPSLATE)
+        BiomeModifications.addFeature(
+            BiomeSelectors.foundInOverworld(),
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            oreRandomDeepslate
+        )
     }
 
     companion object {
+        //Ore Blocks
         val RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(4.0f))
+        val DEEPSLATE_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(6.0f))
 
+        //Ore Generations
         private val ORE_RANDOM_STONE: ConfiguredFeature<*, *> = Feature.ORE
             .configure(
                 OreFeatureConfig(
@@ -58,10 +78,25 @@ class RandoreMod : ModInitializer {
             ) // Vein size
             .range(
                 RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(0), YOffset.fixed(27))
+                    UniformHeightProvider.create(YOffset.aboveBottom(1), YOffset.fixed(27))
                 )
             ) // Inclusive min and max height
             .spreadHorizontally()
             .repeat(13) // Number of veins per chunk
+        private val ORE_RANDOM_DEEPSLATE: ConfiguredFeature<*, *> = Feature.ORE
+            .configure(
+                OreFeatureConfig(
+                    OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES,
+                    DEEPSLATE_RANDOM_ORE.defaultState,
+                    4
+                )
+            ) // Vein size
+            .range(
+                RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
+                    UniformHeightProvider.create(YOffset.aboveBottom(-64), YOffset.fixed(10))
+                )
+            ) // Inclusive min and max height
+            .spreadHorizontally()
+            .repeat(8) // Number of veins per chunk
     }
 }
