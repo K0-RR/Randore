@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 25,
+          "weight": 20,
           "name": "minecraft:coal",
           "functions": [
             {
@@ -17,7 +17,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
+          "weight": 21,
           "name": "minecraft:lapis_lazuli",
           "functions": [
             {
@@ -50,7 +50,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 15,
           "name": "minecraft:quartz",
           "functions": [
             {
@@ -69,12 +69,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
+          "weight": 15,
           "name": "minecraft:diamond"
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
+          "weight": 20,
           "name": "minecraft:emerald"
         },
         {

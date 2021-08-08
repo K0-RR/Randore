@@ -5,10 +5,10 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Material
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemGroup
+import net.minecraft.item.*
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.BuiltinRegistries
 import net.minecraft.util.registry.Registry
@@ -54,7 +54,7 @@ class RandoreMod : ModInitializer {
             Registry.CONFIGURED_FEATURE_KEY,
             Identifier("randore", "ore_random_deepslate")
         )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, RandoreMod.ORE_RANDOM_DEEPSLATE)
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, ORE_RANDOM_DEEPSLATE)
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
@@ -64,8 +64,8 @@ class RandoreMod : ModInitializer {
 
     companion object {
         //Ore Blocks
-        val RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(4.0f))
-        val DEEPSLATE_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(6.0f))
+        val RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2))
+        val DEEPSLATE_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(6.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3))
 
         //Ore Generations
         private val ORE_RANDOM_STONE: ConfiguredFeature<*, *> = Feature.ORE
