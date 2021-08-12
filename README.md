@@ -1,6 +1,7 @@
 <img src="icon.png" align="right" width="180px"/>
 
 # Rand'Ore
+[![forthebadge](https://forthebadge.com/images/featured/featured-built-with-love.svg)][https://modrinth.com/mod/randore]
 
 [>> Download <<](https://modrinth.com/mod/randore)
 
