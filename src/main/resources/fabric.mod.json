@@ -22,8 +22,14 @@
       {
         "adapter": "kotlin",
         "value": "dev.intelligentcreations.randore.RandoreMod"
-    }
+      }
     ]
+  },
+  "custom": {
+    "paradoxconfig": {
+      "package": "dev.intelligentcreations.randore",
+      "configs": [ "RandoreConfig" ]
+    }
   },
   "depends": {
     "fabricloader": ">=0.8.7",
