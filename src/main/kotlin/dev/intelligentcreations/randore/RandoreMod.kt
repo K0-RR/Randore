@@ -22,7 +22,22 @@ import net.minecraft.world.gen.feature.ConfiguredFeature
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.OreFeatureConfig
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider
-import dev.intelligentcreations.randore.RandoreConfig
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_times
 
 
 // For support join https://discord.gg/v6v4pMv
@@ -109,60 +124,60 @@ class RandoreMod : ModInitializer {
                 OreFeatureConfig(
                     OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
                     RANDOM_ORE.defaultState,
-                    3
+                    randomoregen_size
                 )
             ) // Vein size
             .range(
                 RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(1), YOffset.fixed(27))
+                    UniformHeightProvider.create(YOffset.aboveBottom(randomoregen_y_min), YOffset.fixed(randomoregen_y_max))
                 )
             ) // Inclusive min and max height
             .spreadHorizontally()
-            .repeat(13) // Number of veins per chunk
+            .repeat(randomoregen_times) // Number of veins per chunk
         private val ORE_RANDOM_DEEPSLATE: ConfiguredFeature<*, *> = Feature.ORE
             .configure(
                 OreFeatureConfig(
                     OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES,
                     DEEPSLATE_RANDOM_ORE.defaultState,
-                    4
+                    dsrandomoregen_size
                 )
             ) // Vein size
             .range(
                 RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(-64), YOffset.fixed(10))
+                    UniformHeightProvider.create(YOffset.aboveBottom(dsrandomoregen_y_min), YOffset.fixed(dsrandomoregen_y_max))
                 )
             ) // Inclusive min and max height
             .spreadHorizontally()
-            .repeat(8) // Number of veins per chunk
+            .repeat(dsrandomoregen_times) // Number of veins per chunk
         private val ORE_RANDOM_NETHER: ConfiguredFeature<*, *> = Feature.ORE
             .configure(
                 OreFeatureConfig(
                     OreFeatureConfig.Rules.BASE_STONE_NETHER,
                     NETHER_RANDOM_ORE.defaultState,
-                    5
+                    nrandomoregen_size
                 )
             ) // Vein size
             .range(
                 RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(0), YOffset.fixed(128))
+                    UniformHeightProvider.create(YOffset.aboveBottom(nrandomoregen_y_min), YOffset.fixed(nrandomoregen_y_max))
                 )
             ) // Inclusive min and max height
             .spreadHorizontally()
-            .repeat(10) // Number of veins per chunk
+            .repeat(nrandomoregen_times) // Number of veins per chunk
         private val ORE_RANDOM_END: ConfiguredFeature<*, *> = Feature.ORE
             .configure(
                 OreFeatureConfig(
                     BlockMatchRuleTest(Blocks.END_STONE),
                     END_RANDOM_ORE.defaultState,
-                    7
+                    erandomoregen_size
                 )
             ) // Vein size
             .range(
                 RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(10), YOffset.fixed(80))
+                    UniformHeightProvider.create(YOffset.aboveBottom(erandomoregen_y_min), YOffset.fixed(erandomoregen_y_max))
                 )
             ) // Inclusive min and max height
             .spreadHorizontally()
-            .repeat(10) // Number of veins per chunk
+            .repeat(erandomoregen_times) // Number of veins per chunk
     }
 }
