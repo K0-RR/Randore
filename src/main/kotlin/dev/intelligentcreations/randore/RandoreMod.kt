@@ -22,6 +22,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.OreFeatureConfig
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider
+import dev.intelligentcreations.randore.RandoreConfig
 
 
 // For support join https://discord.gg/v6v4pMv
