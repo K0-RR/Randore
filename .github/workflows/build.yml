@@ -40,7 +40,6 @@ jobs:
           dependencies-cache-enabled: true
 
       - name: Capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '11' }}
         uses: actions/upload-artifact@v2
         with:
           name: RandOre
