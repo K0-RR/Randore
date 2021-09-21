@@ -4,7 +4,7 @@
 
 [![](http://cf.way2muchnoise.eu/full_514716_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randore)
 
-[>> Download <<](https://modrinth.com/mod/randore)
+[>> Download <<](https://www.curseforge.com/minecraft/mc-mods/randore)
 
 *Simple random ores for Fabric!*
 
