@@ -4,7 +4,7 @@
 
 [![](http://cf.way2muchnoise.eu/full_514716_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randore)
 
-[![](https://cf.way2muchnoise.eu/title/514716_Get_Today!.svg)](https://www.curseforge.com/minecraft/mc-mods/the-sol)
+[![](https://cf.way2muchnoise.eu/title/randore_Get_Today!.svg)](https://www.curseforge.com/minecraft/mc-mods/randore)
 
 [>> Download <<](https://modrinth.com/mod/randore)
 
