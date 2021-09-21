@@ -2,6 +2,7 @@
 
 # Rand'Ore
 [![](http://cf.way2muchnoise.eu/full_514716_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/randore)
+[![](https://cf.way2muchnoise.eu/versions/514716.svg)](https://www.curseforge.com/minecraft/mc-mods/randore)
 
 [>> Download <<](https://modrinth.com/mod/randore)
 
