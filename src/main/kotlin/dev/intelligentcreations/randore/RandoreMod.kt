@@ -1,5 +1,25 @@
 package dev.intelligentcreations.randore
 
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_min
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
@@ -22,25 +42,9 @@ import net.minecraft.world.gen.feature.ConfiguredFeature
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.OreFeatureConfig
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_times
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 
-
-// For support join https://discord.gg/v6v4pMv
 
 class RandoreMod : ModInitializer {
     override fun onInitialize() {
@@ -68,50 +72,71 @@ class RandoreMod : ModInitializer {
             Identifier("randore", "end_random_ore"),
             BlockItem(END_RANDOM_ORE, FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS))
         )
-        
-        val oreRandomStone = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_stone")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomStone.value, ORE_RANDOM_STONE)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInOverworld(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomStone
-        )
-        val oreRandomDeepslate = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_deepslate")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, ORE_RANDOM_DEEPSLATE)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInOverworld(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomDeepslate
-        )
-        val oreRandomNether = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_nether")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomNether.value, ORE_RANDOM_NETHER)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInTheNether(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomNether
-        )
-        val oreRandomEnd = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_end")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomEnd.value, ORE_RANDOM_END)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInTheEnd(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomEnd
-        )
+
+        if (randomoregen == true) {
+            val oreRandomStone = RegistryKey.of(
+                Registry.CONFIGURED_FEATURE_KEY,
+                Identifier("randore", "ore_random_stone")
+            )
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomStone.value, ORE_RANDOM_STONE)
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                oreRandomStone
+            )
+        } else {
+            LOGGER.info("Not generating random ores.")
+        }
+
+        if (dsrandomoregen == true) {
+            val oreRandomDeepslate = RegistryKey.of(
+                Registry.CONFIGURED_FEATURE_KEY,
+                Identifier("randore", "ore_random_deepslate")
+            )
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, ORE_RANDOM_DEEPSLATE)
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                oreRandomDeepslate
+            )
+        } else {
+            LOGGER.info("Not generating deepslate random ores.")
+        }
+
+        if (nrandomoregen == true) {
+            val oreRandomNether = RegistryKey.of(
+                Registry.CONFIGURED_FEATURE_KEY,
+                Identifier("randore", "ore_random_nether")
+            )
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomNether.value, ORE_RANDOM_NETHER)
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInTheNether(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                oreRandomNether
+            )
+        } else {
+            LOGGER.info("Not generating nether random ores.")
+        }
+
+        if (erandomoregen == true) {
+            val oreRandomEnd = RegistryKey.of(
+                Registry.CONFIGURED_FEATURE_KEY,
+                Identifier("randore", "ore_random_end")
+            )
+            Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomEnd.value, ORE_RANDOM_END)
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInTheEnd(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                oreRandomEnd
+            )
+        } else {
+            LOGGER.info("Not generating end random ores.")
+        }
     }
 
     companion object {
+        val LOGGER: Logger = LogManager.getLogger("Rand'Ore")
+
         //Ore Blocks
         val RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2))
         val DEEPSLATE_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(6.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3))
