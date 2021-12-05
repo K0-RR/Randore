@@ -6,7 +6,7 @@ object RandoreConfig: ConfigCategory("randore.json") {
     object RandomOreConfig: ConfigCategory("random_ore_config", "Random Ore") {
         var randomoregen: Boolean by option(true,"do_generate")
         var randomoregen_y_min: Int by option(1,"oregen_y_min")
-        var randomoregen_y_max: Int by option(27,"oregen_y_max")
+        var randomoregen_y_max: Int by option(50,"oregen_y_max")
         var randomoregen_size: Int by option(3,"oregen_size")
         var randomoregen_times: Int by option(13,"veins_per_chunk")
     }
