@@ -29,7 +29,8 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.Material
-import net.minecraft.item.*
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemGroup
 import net.minecraft.structure.rule.BlockMatchRuleTest
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.BuiltinRegistries
@@ -41,8 +42,6 @@ import net.minecraft.world.gen.decorator.CountPlacementModifier
 import net.minecraft.world.gen.decorator.HeightRangePlacementModifier
 import net.minecraft.world.gen.decorator.SquarePlacementModifier
 import net.minecraft.world.gen.feature.*
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 
 
 class RandoreMod : ModInitializer {
@@ -89,7 +88,7 @@ class RandoreMod : ModInitializer {
                 )
             )
         } else {
-            LOGGER.info("Not generating random ores.")
+            System.out.println("Not generating random ores.");
         }
 
         if (dsrandomoregen) {
@@ -109,7 +108,7 @@ class RandoreMod : ModInitializer {
                 )
             )
         } else {
-            LOGGER.info("Not generating deepslate random ores.")
+            System.out.println("Not generating deepslate random ores.");
         }
 
         if (nrandomoregen) {
@@ -129,7 +128,7 @@ class RandoreMod : ModInitializer {
                 )
             )
         } else {
-            LOGGER.info("Not generating nether random ores.")
+            System.out.println("Not generating nether random ores.");
         }
 
         if (erandomoregen) {
@@ -149,13 +148,11 @@ class RandoreMod : ModInitializer {
                 )
             )
         } else {
-            LOGGER.info("Not generating end random ores.")
+            System.out.println("Not generating end random ores.");
         }
     }
 
     companion object {
-        val LOGGER: Logger = LogManager.getLogger("Rand'Ore")
-
         //Ore Blocks
         val RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2))
         val DEEPSLATE_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(6.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3))
