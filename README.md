@@ -1,6 +1,6 @@
-<img src="icon.png" align="right" width="180px"/>
-
 # This repository has been abandoned, go to [Intelligent Creations's repository](https://github.com/IntelligentCreations/Randore/) of Rand'Ore instead.
+
+<img src="icon.png" align="right" width="180px"/>
 
 # Rand'Ore
 
