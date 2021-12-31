@@ -3,7 +3,7 @@
   "id": "randore",
   "version": "${version}",
 
-  "name": "Randore",
+  "name": "Rand'Ore",
   "description": "Random ore block that drops ALL (vanilla) kinds of ore!",
   "authors": [
     "Peakstep"

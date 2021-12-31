@@ -1,5 +1,25 @@
 package dev.intelligentcreations.randore
 
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_min
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_size
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_times
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_max
+import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_min
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
@@ -9,7 +29,8 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.Material
-import net.minecraft.item.*
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemGroup
 import net.minecraft.structure.rule.BlockMatchRuleTest
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.BuiltinRegistries
@@ -17,30 +38,11 @@ import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.YOffset
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig
-import net.minecraft.world.gen.feature.ConfiguredFeature
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.OreFeatureConfig
-import net.minecraft.world.gen.heightprovider.UniformHeightProvider
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.RandomOreConfig.randomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.DeepslateRandomOreConfig.dsrandomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.NetherRandomOreConfig.nrandomoregen_times
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_min
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_y_max
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_size
-import dev.intelligentcreations.randore.RandoreConfig.EndRandomOreConfig.erandomoregen_times
+import net.minecraft.world.gen.decorator.CountPlacementModifier
+import net.minecraft.world.gen.decorator.HeightRangePlacementModifier
+import net.minecraft.world.gen.decorator.SquarePlacementModifier
+import net.minecraft.world.gen.feature.*
 
-
-// For support join https://discord.gg/v6v4pMv
 
 class RandoreMod : ModInitializer {
     override fun onInitialize() {
@@ -68,47 +70,86 @@ class RandoreMod : ModInitializer {
             Identifier("randore", "end_random_ore"),
             BlockItem(END_RANDOM_ORE, FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS))
         )
-        
-        val oreRandomStone = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_stone")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomStone.value, ORE_RANDOM_STONE)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInOverworld(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomStone
-        )
-        val oreRandomDeepslate = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_deepslate")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomDeepslate.value, ORE_RANDOM_DEEPSLATE)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInOverworld(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomDeepslate
-        )
-        val oreRandomNether = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_nether")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomNether.value, ORE_RANDOM_NETHER)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInTheNether(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomNether
-        )
-        val oreRandomEnd = RegistryKey.of(
-            Registry.CONFIGURED_FEATURE_KEY,
-            Identifier("randore", "ore_random_end")
-        )
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, oreRandomEnd.value, ORE_RANDOM_END)
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInTheEnd(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            oreRandomEnd
-        )
+
+        if (randomoregen) {
+            Registry.register<ConfiguredFeature<*, *>, ConfiguredFeature<*, *>>(
+                BuiltinRegistries.CONFIGURED_FEATURE,
+                Identifier("randore", "random_ore_gen"), RANDOM_ORE_CONFIGURED_FEATURE
+            )
+            Registry.register(
+                BuiltinRegistries.PLACED_FEATURE, Identifier("randore", "random_ore_gen"),
+                RANDOM_ORE_PLACED_FEATURE
+            )
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES,
+                RegistryKey.of(
+                    Registry.PLACED_FEATURE_KEY,
+                    Identifier("randore", "random_ore_gen")
+                )
+            )
+        } else {
+            System.out.println("Not generating random ores.");
+        }
+
+        if (dsrandomoregen) {
+            Registry.register<ConfiguredFeature<*, *>, ConfiguredFeature<*, *>>(
+                BuiltinRegistries.CONFIGURED_FEATURE,
+                Identifier("randore", "deepslate_random_ore_gen"), DEEPSLATE_RANDOM_ORE_CONFIGURED_FEATURE
+            )
+            Registry.register(
+                BuiltinRegistries.PLACED_FEATURE, Identifier("randore", "deepslate_random_ore_gen"),
+                DEEPSLATE_RANDOM_ORE_PLACED_FEATURE
+            )
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES,
+                RegistryKey.of(
+                    Registry.PLACED_FEATURE_KEY,
+                    Identifier("randore", "deepslate_random_ore_gen")
+                )
+            )
+        } else {
+            System.out.println("Not generating deepslate random ores.");
+        }
+
+        if (nrandomoregen) {
+            Registry.register<ConfiguredFeature<*, *>, ConfiguredFeature<*, *>>(
+                BuiltinRegistries.CONFIGURED_FEATURE,
+                Identifier("randore", "nether_random_ore_gen"), NETHER_RANDOM_ORE_CONFIGURED_FEATURE
+            )
+            Registry.register(
+                BuiltinRegistries.PLACED_FEATURE, Identifier("randore", "nether_random_ore_gen"),
+                NETHER_RANDOM_ORE_PLACED_FEATURE
+            )
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES,
+                RegistryKey.of(
+                    Registry.PLACED_FEATURE_KEY,
+                    Identifier("randore", "nether_random_ore_gen")
+                )
+            )
+        } else {
+            System.out.println("Not generating nether random ores.");
+        }
+
+        if (erandomoregen) {
+            Registry.register<ConfiguredFeature<*, *>, ConfiguredFeature<*, *>>(
+                BuiltinRegistries.CONFIGURED_FEATURE,
+                Identifier("randore", "end_random_ore_gen"), END_RANDOM_ORE_CONFIGURED_FEATURE
+            )
+            Registry.register(
+                BuiltinRegistries.PLACED_FEATURE, Identifier("randore", "end_random_ore_gen"),
+                END_RANDOM_ORE_PLACED_FEATURE
+            )
+            BiomeModifications.addFeature(
+                BiomeSelectors.foundInTheEnd(), GenerationStep.Feature.UNDERGROUND_ORES,
+                RegistryKey.of(
+                    Registry.PLACED_FEATURE_KEY,
+                    Identifier("randore", "end_random_ore_gen")
+                )
+            )
+        } else {
+            System.out.println("Not generating end random ores.");
+        }
     }
 
     companion object {
@@ -119,65 +160,60 @@ class RandoreMod : ModInitializer {
         val END_RANDOM_ORE: Block = Block(FabricBlockSettings.of(Material.STONE).strength(5.0f).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2))
 
         //Ore Generations
-        private val ORE_RANDOM_STONE: ConfiguredFeature<*, *> = Feature.ORE
+        private var RANDOM_ORE_CONFIGURED_FEATURE: ConfiguredFeature<*, *>? = Feature.ORE
             .configure(
                 OreFeatureConfig(
-                    OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
+                    OreConfiguredFeatures.STONE_ORE_REPLACEABLES,
                     RANDOM_ORE.defaultState,
                     randomoregen_size
                 )
-            ) // Vein size
-            .range(
-                RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(randomoregen_y_min), YOffset.fixed(randomoregen_y_max))
-                )
-            ) // Inclusive min and max height
-            .spreadHorizontally()
-            .repeat(randomoregen_times) // Number of veins per chunk
-        private val ORE_RANDOM_DEEPSLATE: ConfiguredFeature<*, *> = Feature.ORE
+            ) // vein size
+        var RANDOM_ORE_PLACED_FEATURE: PlacedFeature = RANDOM_ORE_CONFIGURED_FEATURE!!.withPlacement(
+            CountPlacementModifier.of(randomoregen_times),  // number of veins per chunk
+            SquarePlacementModifier.of(),  // spreading horizontally
+            HeightRangePlacementModifier.uniform(YOffset.aboveBottom(randomoregen_y_min), YOffset.fixed(randomoregen_y_max))
+        ) // height
+
+        private var DEEPSLATE_RANDOM_ORE_CONFIGURED_FEATURE: ConfiguredFeature<*, *>? = Feature.ORE
             .configure(
                 OreFeatureConfig(
-                    OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES,
+                    OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES,
                     DEEPSLATE_RANDOM_ORE.defaultState,
                     dsrandomoregen_size
                 )
-            ) // Vein size
-            .range(
-                RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(dsrandomoregen_y_min), YOffset.fixed(dsrandomoregen_y_max))
-                )
-            ) // Inclusive min and max height
-            .spreadHorizontally()
-            .repeat(dsrandomoregen_times) // Number of veins per chunk
-        private val ORE_RANDOM_NETHER: ConfiguredFeature<*, *> = Feature.ORE
+            ) // vein size
+        var DEEPSLATE_RANDOM_ORE_PLACED_FEATURE: PlacedFeature = DEEPSLATE_RANDOM_ORE_CONFIGURED_FEATURE!!.withPlacement(
+            CountPlacementModifier.of(dsrandomoregen_times),  // number of veins per chunk
+            SquarePlacementModifier.of(),  // spreading horizontally
+            HeightRangePlacementModifier.uniform(YOffset.aboveBottom(dsrandomoregen_y_min), YOffset.fixed(dsrandomoregen_y_max))
+        ) // height
+
+        private var NETHER_RANDOM_ORE_CONFIGURED_FEATURE: ConfiguredFeature<*, *>? = Feature.ORE
             .configure(
                 OreFeatureConfig(
-                    OreFeatureConfig.Rules.BASE_STONE_NETHER,
+                    OreConfiguredFeatures.NETHERRACK,
                     NETHER_RANDOM_ORE.defaultState,
                     nrandomoregen_size
                 )
-            ) // Vein size
-            .range(
-                RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(nrandomoregen_y_min), YOffset.fixed(nrandomoregen_y_max))
-                )
-            ) // Inclusive min and max height
-            .spreadHorizontally()
-            .repeat(nrandomoregen_times) // Number of veins per chunk
-        private val ORE_RANDOM_END: ConfiguredFeature<*, *> = Feature.ORE
+            ) // vein size
+        var NETHER_RANDOM_ORE_PLACED_FEATURE: PlacedFeature = NETHER_RANDOM_ORE_CONFIGURED_FEATURE!!.withPlacement(
+            CountPlacementModifier.of(nrandomoregen_times),  // number of veins per chunk
+            SquarePlacementModifier.of(),  // spreading horizontally
+            HeightRangePlacementModifier.uniform(YOffset.aboveBottom(nrandomoregen_y_min), YOffset.fixed(nrandomoregen_y_max))
+        ) // height
+
+        private var END_RANDOM_ORE_CONFIGURED_FEATURE: ConfiguredFeature<*, *>? = Feature.ORE
             .configure(
                 OreFeatureConfig(
                     BlockMatchRuleTest(Blocks.END_STONE),
                     END_RANDOM_ORE.defaultState,
                     erandomoregen_size
                 )
-            ) // Vein size
-            .range(
-                RangeDecoratorConfig( // You can also use one of the other height providers if you don't want a uniform distribution
-                    UniformHeightProvider.create(YOffset.aboveBottom(erandomoregen_y_min), YOffset.fixed(erandomoregen_y_max))
-                )
-            ) // Inclusive min and max height
-            .spreadHorizontally()
-            .repeat(erandomoregen_times) // Number of veins per chunk
+            ) // vein size
+        var END_RANDOM_ORE_PLACED_FEATURE: PlacedFeature = END_RANDOM_ORE_CONFIGURED_FEATURE!!.withPlacement(
+            CountPlacementModifier.of(erandomoregen_times),  // number of veins per chunk
+            SquarePlacementModifier.of(),  // spreading horizontally
+            HeightRangePlacementModifier.uniform(YOffset.aboveBottom(erandomoregen_y_min), YOffset.fixed(erandomoregen_y_max))
+        ) // height
     }
 }
